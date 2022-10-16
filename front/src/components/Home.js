@@ -1,4 +1,5 @@
-import styles from "../styles/chat.module.css";
+import "../styles/home.css";
+import ScrollToBottom from 'react-scroll-to-bottom';
 import React from "react";
 import {useState, useEffect} from "react";
 import io from "socket.io-client";
@@ -62,21 +63,26 @@ function Chat({username}) {
       method: "GET"
     }).then(res => res.json())
       .then(data => {
-        data.forEach( (message) => {
-          addMessage(message);
-        });
+        for(let i = data.length - 1; i >=0; i--) {
+          addMessage(data[i]);
+        }
       });;
   }
 
   useEffect(() => {
     socket.on("update_feed", data => {
       addMessage(data);
+      if(messages.length > 40) {
+        console.log("removing message, too many in state");
+        console.log(messages.shift());
+      }
     });
 
     push20Messages();
 
     return () => {
       socket.off("update_feed");
+      setMessages([]);
     };
   }, []);
 
@@ -85,13 +91,13 @@ function Chat({username}) {
       <div className="chat-header">
         <h3>Now chatting as {username}</h3>
       </div>
-      <div className="chat-body">
+      <ScrollToBottom className="chat-body">
         {messages.map((d, index) => {
           return (
             <Message data={d} key={index}/>
           );
         })}
-      </div>
+      </ScrollToBottom>
       <div className="chat-footer">
         <input type="text" onChange={e => setCurrentMessage(e.target.value)} value={currentMessage} placeholder="Type message here:"/>
         <button onClick={sendMessage}>Send</button>

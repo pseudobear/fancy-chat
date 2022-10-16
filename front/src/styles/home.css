@@ -1,0 +1,28 @@
+.Chat {
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
+  background-color: white;
+  height: 90vh;
+  width: 80vw;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
+.chat-body {
+  position: relative;
+  margin: 0 auto;
+  background-color: white;
+  height: 70%;
+  width: 80%;
+  overflow: scroll;
+}
+
+.Message {
+  text-align: left;
+}

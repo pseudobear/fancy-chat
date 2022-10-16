@@ -1,4 +1,6 @@
+import "../styles/login.css"
 import React from "react"
+import vanGogh from "../assets/vanGogh.png"
 import {useState} from "react";
 import {useNavigate, Navigate} from "react-router-dom"
 import {getCookie} from "../utils/cookies.js"
@@ -42,13 +44,31 @@ const Login = () => {
   }
 
   return (
-    <div className="Login">
-      <h3>Login to your account</h3>
-      <input type="text" onChange={e => setUser(e.target.value)} placeholder="username"/> 
-      <input type="password" onChange={e => setPass(e.target.value)}placeholder="password"/> 
-      <button onClick={clickSignIn}>Sign in</button>
-
-      <button>Sign up</button>
+    <div>
+    <div className="lContainer">
+      <h1> Welcome to Fancy Chat </h1>
+      <div className="login-image">
+        <img src={vanGogh} width="300" style={{position: 'relative'}} alt="login"/>
+      </div>
+      <div className="Login lItem">
+        <div className="loginForm">
+          <h3>Login</h3>
+          <div className="login-form">
+            <div className="field">
+              <input className="" type="text" onChange={e => setUser(e.target.value)} placeholder="username"/> 
+            </div>
+            <div className="field">
+              <input className="" type="password" onChange={e => setPass(e.target.value)} placeholder="password"/> 
+            </div>
+            <button className="button-66 login-form-button"  onClick={clickSignIn}>Sign in</button>
+            <button className="button-55 login-form-forgot" >Sign up</button>
+          </div>
+        </div>
+      </div>
+      <div className="footer">
+        <a href="https://lovepik.com/images/png-artist.html">Artist Png vectors by Lovepik.com</a>
+      </div>
+    </div>
     </div>
   );
 }
