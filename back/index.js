@@ -1,11 +1,15 @@
 const express = require("express");
+const readline = require("readline-sync");
 const socketio = require("socket.io");
 const crypto = require("crypto");
 const cors = require("cors");
 const {MongoClient} = require("mongodb");
 const port = 3001;
 
-const mongoClient = new MongoClient("mongodb+srv://pseudobear:eatingCshe%2F%2Fs@cluster0.uybyndw.mongodb.net/?retryWrites=true&w=majority");
+const DBuser = readline.question("please enter DB username");
+const DBpass = readline.question("please enter DB password");
+
+const mongoClient = new MongoClient(`mongodb+srv://${DBuser}:${DBpass}@cluster0.uybyndw.mongodb.net/?retryWrites=true&w=majority`);
 
 const app = express();
 const corsPolicy = {
