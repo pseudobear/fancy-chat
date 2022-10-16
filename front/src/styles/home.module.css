@@ -35,7 +35,7 @@ body {
   background: transparent; /* make scrollbar transparent */
 }
 
-.chat-body {
+.chat_body {
   position: relative;
   margin: 0 auto;
   background-color: white;
@@ -44,7 +44,7 @@ body {
   overflow: scroll;
 }
 
-.chat-footer {
+.chat_footer {
   position: relative;
 	text-align: left;
   height: 10%;
@@ -125,7 +125,7 @@ p {
 }
 
 /* CSS */
-.button-48 {
+.button_48 {
   appearance: none;
   background-color: #FFFFFF;
   border-width: 0;
@@ -157,7 +157,7 @@ p {
 	width: 25%;
 }
 
-.button-48:before {
+.button_48:before {
   animation: opacityFallbackOut .5s step-end forwards;
   backface-visibility: hidden;
   background-color: #EBEBEB;
@@ -172,16 +172,16 @@ p {
   width: 100%;
 }
 
-.button-48:hover:before {
+.button_48:hover:before {
   animation: opacityFallbackIn 0s step-start forwards;
   clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
 }
 
-.button-48:after {
+.button_48:after {
   background-color: #FFFFFF;
 }
 
-.button-48 span {
+.button_48 span {
   z-index: 1;
   position: relative;
 }

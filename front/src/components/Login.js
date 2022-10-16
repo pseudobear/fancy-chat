@@ -1,4 +1,4 @@
-import "../styles/login.css"
+import styles from "../styles/login.module.css"
 import React from "react"
 import vanGogh from "../assets/vanGogh.png"
 import {useState} from "react";
@@ -45,27 +45,27 @@ const Login = () => {
 
   return (
     <div>
-    <div className="lContainer">
+    <div className={styles.lContainer}>
       <h1> Welcome to Fancy Chat </h1>
-      <div className="login-image">
+      <div className={styles.loginImage}>
         <img src={vanGogh} width="300" style={{position: 'relative'}} alt="login"/>
       </div>
-      <div className="Login lItem">
-        <div className="loginForm">
+      <div className={`${styles.Login} ${styles.lItem}`}>
+        <div className={styles.loginForm}>
           <h3>Login</h3>
-          <div className="login-form">
-            <div className="field">
-              <input className="" type="text" onChange={e => setUser(e.target.value)} placeholder="username"/> 
+          <div className={styles.login_form}>
+            <div className={styles.field}>
+              <input type="text" onChange={e => setUser(e.target.value)} placeholder="username"/> 
             </div>
-            <div className="field">
-              <input className="" type="password" onChange={e => setPass(e.target.value)} placeholder="password"/> 
+            <div className={styles.field}>
+              <input type="password" onChange={e => setPass(e.target.value)} placeholder="password"/> 
             </div>
-            <button className="button-66 login-form-button"  onClick={clickSignIn}>Sign in</button>
-            <button className="button-55 login-form-forgot" >Sign up</button>
+            <button className={`${styles.button_66} ${styles.login_form_button}`}  onClick={clickSignIn}>Sign in</button>
+            <button className={`${styles.button_55} ${styles.login_form_forgot}`} >Sign up</button>
           </div>
         </div>
       </div>
-      <div className="footer">
+      <div className={styles.footer}>
         <a href="https://lovepik.com/images/png-artist.html">Artist Png vectors by Lovepik.com</a>
       </div>
     </div>

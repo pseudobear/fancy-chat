@@ -1,4 +1,4 @@
-import "../styles/home.css";
+import styles from "../styles/home.module.css";
 import ScrollToBottom from 'react-scroll-to-bottom';
 import React from "react";
 import {useState, useEffect} from "react";
@@ -23,7 +23,7 @@ const Home = () => {
   };
 
   return (
-    <div className="Home">
+    <div className={styles.Home}>
       <div>
         <h2>Welcome to Fancy Chat</h2>
         <button onClick={signOut}>Sign Out</button>
@@ -89,23 +89,23 @@ function Chat({username}) {
   }, []);
 
   return (
-    <div className="Chat">
-      <div className="chat-header">
+    <div className={styles.Chat}>
+      <div className={styles.chat_header}>
         <h3>Now chatting as {username}</h3>
       </div>
-      <ScrollToBottom className="chat-body">
+      <ScrollToBottom className={styles.chat_body}>
         {messages.map((d, index) => {
           return (
             <Message data={d} key={index}/>
           );
         })}
       </ScrollToBottom>
-      <div className="chat-footer">
-        <div className="field">
+      <div className={styles.chat_footer}>
+        <div className={styles.field}>
           <input type="text" onChange={e => setCurrentMessage(e.target.value)} 
             onKeyDown={e => e.key === "Enter" && sendMessage()} value={currentMessage} placeholder="Type message here:"/>
         </div>
-        <button className="button-48" onClick={sendMessage}>Send</button>
+        <button className={styles.button_48} onClick={sendMessage}>Send</button>
       </div>
     </div>
   );
@@ -113,7 +113,7 @@ function Chat({username}) {
 
 function Message({data}) {
   return (
-    <div className="Message">
+    <div className={styles.Message}>
       <h5>{data.user}</h5>
       <p>{data.message}</p>
     </div>
