@@ -73,15 +73,43 @@ app.post("/login/verify", (req, res) => {
 
 });
 
-
+app.get("/messages/get20", async (req, res) => {
+  console.log("message get 20 hit:");
+  try{
+    await mongoClient.connect();
+    const queryResult = await mongoClient.db("fancychatdb")
+      .collection("messages")
+      .find()
+      .sort({ time: -1 })
+      .limit(20)
+      .toArray();
+    res.json(queryResult);
+  } catch(e) {
+    console.error(e);
+  } finally {
+    await mongoClient.close();
+  }
+});
 
 // socket events
 io.on("connection", (socket) => {
   console.log("connection initiated");
 
-  socket.on("send_message", (data) => {
+  socket.on("send_message", async (data) => {
     console.log("message received from: " + data.user);
-    io.emit("update_feed", data);
+    try{
+      console.log("updating database with message...");
+      await mongoClient.connect();
+      await mongoClient.db("fancychatdb")
+        .collection("messages")
+        .insertOne(data);
+      console.log("success, updating feeds");
+      io.emit("update_feed", data);
+    } catch(e) {
+      console.error(e);
+    } finally {
+      await mongoClient.close();
+    }
   });
 
   socket.on("disconnect", () => {

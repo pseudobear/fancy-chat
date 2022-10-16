@@ -1,3 +1,4 @@
+import styles from "../styles/chat.module.css";
 import React from "react";
 import {useState, useEffect} from "react";
 import io from "socket.io-client";
@@ -37,18 +38,6 @@ function Chat({username}) {
     setMessages(c => [...c, data]);
   }
 
-  useEffect(() => {
-    socket.on("update_feed", data => {
-      addMessage(data);
-    });
-
-
-
-    return () => {
-      socket.off("update_feed");
-    };
-  }, []);
-
   const sendMessage = async () => {
     if(currentMessage === "") return;
 
@@ -66,6 +55,30 @@ function Chat({username}) {
       console.log(e);
     }
   }
+
+  const push20Messages = async () => {
+    console.log("loading in initial messages...");
+    await fetch(BACKEND_URL + "/messages/get20", {
+      method: "GET"
+    }).then(res => res.json())
+      .then(data => {
+        data.forEach( (message) => {
+          addMessage(message);
+        });
+      });;
+  }
+
+  useEffect(() => {
+    socket.on("update_feed", data => {
+      addMessage(data);
+    });
+
+    push20Messages();
+
+    return () => {
+      socket.off("update_feed");
+    };
+  }, []);
 
   return (
     <div className="Chat">
