@@ -24,8 +24,10 @@ const Home = () => {
 
   return (
     <div className="Home">
-      <h2>Welcome to Fancy Chat</h2>
-      <button onClick={signOut}>Sign Out</button>
+      <div>
+        <h2>Welcome to Fancy Chat</h2>
+        <button onClick={signOut}>Sign Out</button>
+      </div>
       <Chat username={getCookie("user")}/>
     </div>
   );
@@ -99,8 +101,11 @@ function Chat({username}) {
         })}
       </ScrollToBottom>
       <div className="chat-footer">
-        <input type="text" onChange={e => setCurrentMessage(e.target.value)} value={currentMessage} placeholder="Type message here:"/>
-        <button onClick={sendMessage}>Send</button>
+        <div className="field">
+          <input type="text" onChange={e => setCurrentMessage(e.target.value)} 
+            onKeyDown={e => e.key === "Enter" && sendMessage()} value={currentMessage} placeholder="Type message here:"/>
+        </div>
+        <button className="button-48" onClick={sendMessage}>Send</button>
       </div>
     </div>
   );
