@@ -34,14 +34,16 @@ function Chat({username}) {
   const [messages, setMessages] = useState([]);
 
   const addMessage = (data) => {
-    setMessages([...messages, data]);
+    setMessages(c => [...c, data]);
   }
 
   useEffect(() => {
     socket.on("update_feed", data => {
-      console.log(data);
       addMessage(data);
     });
+
+
+
     return () => {
       socket.off("update_feed");
     };
@@ -57,7 +59,12 @@ function Chat({username}) {
       message: currentMessage
     };
 
-    await socket.emit("send_message", messageData);
+    try {
+      setCurrentMessage("");
+      await socket.emit("send_message", messageData);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   return (
@@ -66,14 +73,14 @@ function Chat({username}) {
         <h3>Now chatting as {username}</h3>
       </div>
       <div className="chat-body">
-        {messages.map( ({username, time, message}) => {
+        {messages.map((d, index) => {
           return (
-            <div/>
+            <Message data={d} key={index}/>
           );
         })}
       </div>
       <div className="chat-footer">
-        <input type="text" onChange={e => setCurrentMessage(e.target.value)} placeholder="Type message here:"/>
+        <input type="text" onChange={e => setCurrentMessage(e.target.value)} value={currentMessage} placeholder="Type message here:"/>
         <button onClick={sendMessage}>Send</button>
       </div>
     </div>
@@ -81,7 +88,12 @@ function Chat({username}) {
 }
 
 function Message({data}) {
-
+  return (
+    <div className="Message">
+      <h5>{data.user}</h5>
+      <p>{data.message}</p>
+    </div>
+  );
 }
 export default Home;
 

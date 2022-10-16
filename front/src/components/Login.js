@@ -33,8 +33,10 @@ const Login = () => {
         document.cookie = `a=${data.auth}`
         document.cookie = `user=${user}`;
         navigate("/home");
-      } else {
+      } else if(data.result === "fail") {
         alert("wrong username/password");
+      } else {
+        alert("backend error");
       }
     });
   }
