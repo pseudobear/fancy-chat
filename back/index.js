@@ -4,46 +4,31 @@ const crypto = require("crypto");
 const cors = require("cors");
 const mongoClient = require("./db.js");
 
-const port = 3001;
-
 const loginRoutes = require("./routes/login.js");
+const messagesRoutes = require("./routes/messages.js");
 
+const port = 3001;
 const app = express();
+
+// middleware
 const corsPolicy = {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
   }
 }
-
 app.use(cors(corsPolicy));
 app.use(express.json());
 
+// routes
 app.use("/login", loginRoutes);
+app.use("/messages", messagesRoutes);
 
 const server = app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 
 const io = socketio(server, corsPolicy);
-
-app.get("/messages/get20", async (req, res) => {
-  console.log("message get 20 hit:");
-  try {
-    await mongoClient.connect();
-    const queryResult = await mongoClient.db("fancychatdb")
-      .collection("messages")
-      .find()
-      .sort({ time: -1 })
-      .limit(20)
-      .toArray();
-    res.json(queryResult);
-  } catch(e) {
-    console.error(e);
-  } finally {
-    await mongoClient.close();
-  }
-});
 
 // socket events
 io.on("connection", (socket) => {
