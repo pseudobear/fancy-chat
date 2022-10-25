@@ -29,6 +29,10 @@ const server = app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
 
+app.get("/", (req, res) => {
+  res.send("good, alive");
+});
+
 // message socket stuff below
 
 const checkFullString = (str) => {
