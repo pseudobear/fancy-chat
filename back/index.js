@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
     try {
       const postCheck = checkFullString(data.message);
       if(postCheck.correct) {
-        cnsole.log("   message spellchecked");
+        console.log("   message spellchecked");
         data.message = checkFullString(data.message).message;
         console.log("updating database with message...");
         await mongoClient.connect();
