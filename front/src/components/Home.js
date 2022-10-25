@@ -47,6 +47,7 @@ function Chat({username}) {
     console.log("attempting to send message");
     const messageData = {
       user: username,
+      auth: getCookie("a"),
       time: Date.now(),
       message: currentMessage
     };
@@ -78,6 +79,9 @@ function Chat({username}) {
         console.log("removing message, too many in state");
         console.log(messages.shift());
       }
+    });
+    socket.on("bad_message", data => {
+      alert("Please correct your spelling and try again.");
     });
 
     push20Messages();
