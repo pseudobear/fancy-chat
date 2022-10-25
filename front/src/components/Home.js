@@ -77,6 +77,7 @@ function Chat({username}) {
           addMessage(data[i]);
         }
         failure = false; // break loop
+        i = 6;
       }).catch(e => {
         console.error(e);
         alertBackendError();
