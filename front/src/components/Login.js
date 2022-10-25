@@ -1,9 +1,9 @@
 import styles from "../styles/login.module.css"
 import React from "react"
 import vanGogh from "../assets/vanGogh.png"
-import {useState} from "react";
-import {useNavigate, Navigate} from "react-router-dom"
-import {getCookie} from "../utils/cookies.js"
+import { useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom"
+import { getCookie } from "../utils/cookies.js"
 import { toast } from "react-custom-alert"
 
 const BACKEND_URL = ("http://localhost:3001");

@@ -1,16 +1,18 @@
 import styles from "../styles/home.module.css";
 import ScrollToBottom from 'react-scroll-to-bottom';
 import React from "react";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import io from "socket.io-client";
-import {getCookie} from "../utils/cookies.js";
-import {useNavigate, Navigate} from "react-router-dom";
+import { getCookie } from "../utils/cookies.js";
+import { useNavigate, Navigate } from "react-router-dom";
+import { toast } from "react-custom-alert"
 
 const BACKEND_URL = ("http://localhost:3001");
 const socket = io(BACKEND_URL);
 
 const Home = () => {
   const navigate = useNavigate();
+  const alertLoggedOut = () => toast.info("Successfully logged out.");
 
   // not signed in, redirect to sign in page
   if(getCookie("a") === "") {
@@ -19,6 +21,7 @@ const Home = () => {
 
   const signOut = () => {
     document.cookie = "a=; user=;";
+    alertLoggedOut();
     navigate("/");
   };
 
@@ -36,6 +39,7 @@ const Home = () => {
 function Chat({username}) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const alertMisspelledMessage = () => toast.warning("Please correct your spelling and try again.");
 
   const addMessage = (data) => {
     setMessages(c => [...c, data]);
@@ -81,7 +85,7 @@ function Chat({username}) {
       }
     });
     socket.on("bad_message", data => {
-      alert("Please correct your spelling and try again.");
+      alertMisspelledMessage();
     });
 
     push20Messages();
