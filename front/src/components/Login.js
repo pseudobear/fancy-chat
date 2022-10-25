@@ -32,8 +32,7 @@ const Login = () => {
         user: user,
         pass: pass
       })
-    }).then(res => res.json())
-    .then(data => {
+    }).then(res => res.json()).then(data => {
       if(data.result === "success") {
         document.cookie = `a=${data.auth}`
         document.cookie = `user=${user}`;
@@ -43,6 +42,9 @@ const Login = () => {
       } else {
         alertBackendError();
       }
+    }).catch(e => {
+      console.error(e);
+      alertBackendError();
     });
   }
 

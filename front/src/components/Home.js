@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import { getCookie } from "../utils/cookies.js";
 import { useNavigate, Navigate } from "react-router-dom";
 import { toast } from "react-custom-alert"
+import { sleep } from "../utils/sleep.js";
 
 const BACKEND_URL = ("http://localhost:3001");
 const socket = io(BACKEND_URL);
@@ -40,6 +41,7 @@ function Chat({username}) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const alertMisspelledMessage = () => toast.warning("Please correct your spelling and try again.");
+  const alertBackendError = () => toast.error("Sorry, we are currently having issues with our backend service.");
 
   const addMessage = (data) => {
     setMessages(c => [...c, data]);
@@ -66,14 +68,24 @@ function Chat({username}) {
 
   const push20Messages = async () => {
     console.log("loading in initial messages...");
-    await fetch(BACKEND_URL + "/messages/get20", {
-      method: "GET"
-    }).then(res => res.json())
-      .then(data => {
+    let failure = true;
+    for(let i = 0; (i < 5 && failure); i++) {
+      await fetch(BACKEND_URL + "/messages/get20", {
+        method: "GET"
+      }).then(res => res.json()).then(data => {
         for(let i = data.length - 1; i >=0; i--) {
           addMessage(data[i]);
         }
-      });;
+        failure = false; // break loop
+      }).catch(e => {
+        console.error(e);
+        alertBackendError();
+      });
+      await sleep(2000);
+    }
+    if(failure) {
+      console.error("couldn't obtain messages after 5 retries");
+    }
   }
 
   useEffect(() => {
