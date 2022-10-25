@@ -42,9 +42,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/verify", (req, res) => {
-  console.log("login verification hit:");
-
+router.post("/signup", (req, res) => {
+  console.log("signup");
 });
 
 module.exports = router;
